@@ -1,4 +1,4 @@
-package org.wrn.member;
+package org.wrn.train.member;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
