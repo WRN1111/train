@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+member/src/main/resources/application.properties
+
+generator/src/main/resources/generator-config-member.xml
