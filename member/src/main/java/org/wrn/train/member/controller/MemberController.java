@@ -2,11 +2,10 @@ package org.wrn.train.member.controller;
 
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.wrn.train.common.resp.CommonResp;
+import org.wrn.train.member.req.MemberLoginReq;
+import org.wrn.train.member.req.MemberLoginResp;
 import org.wrn.train.member.req.MemberRegisterReq;
 import org.wrn.train.member.req.MemberSendCodeReq;
 import org.wrn.train.member.service.MemberService;
@@ -40,11 +39,18 @@ public class MemberController {
         return resp;
     }
 
-    @PostMapping("/send-code")
-    public CommonResp<Long> sendCode(@Valid MemberSendCodeReq req) {
+    @PostMapping("/sendCode")
+    public CommonResp<Long> sendCode(@Valid @RequestBody MemberSendCodeReq req) {
         memberService.sendCode(req);
         return new CommonResp<>();
     }
+
+    @PostMapping("/login")
+    public CommonResp<MemberLoginResp> login(@Valid @RequestBody MemberLoginReq req) {
+        MemberLoginResp resp = memberService.login(req);
+        return new CommonResp<>(resp);
+    }
+
 
 
 }

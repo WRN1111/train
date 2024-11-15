@@ -1,16 +1,21 @@
 package org.wrn.train.member.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.wrn.train.common.exception.BusinessException;
 import org.wrn.train.common.exception.BusinessExceptionEnum;
+import org.wrn.train.common.util.JwtUtil;
 import org.wrn.train.common.util.SnowUtil;
 import org.wrn.train.member.domain.Member;
 import org.wrn.train.member.domain.MemberExample;
 import org.wrn.train.member.mapper.MemberMapper;
+import org.wrn.train.member.req.MemberLoginReq;
+import org.wrn.train.member.req.MemberLoginResp;
 import org.wrn.train.member.req.MemberRegisterReq;
 import org.wrn.train.member.req.MemberSendCodeReq;
 
@@ -80,5 +85,36 @@ public class MemberService {
 
         // 对接短信通道，发送短信
         LOGGER.info("对接短信通道");
+    }
+
+    public MemberLoginResp login(MemberLoginReq req) {
+        String mobile = req.getMobile();
+        String code = req.getCode();
+        Member memberDB = selectByMobile(mobile);
+
+        if (ObjectUtil.isNull(memberDB)) {
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_EXIST);
+        }
+
+        if ("8888".equals(code)) {
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_CODE_ERROR);
+        }
+
+        MemberLoginResp resp = BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
+        String token = JwtUtil.creatToken(resp.getId(), resp.getMobile());
+        resp.setToken(token);
+        return resp;
+    }
+
+
+    private Member selectByMobile(String mobile) {
+        MemberExample memberExample = new MemberExample();
+        memberExample.createCriteria().andMobileEqualTo(mobile);
+        List<Member> members = memberMapper.selectByExample(memberExample);
+        if (CollUtil.isNotEmpty(members)) {
+            return members.get(0);
+        } else {
+            return null;
+        }
     }
 }
