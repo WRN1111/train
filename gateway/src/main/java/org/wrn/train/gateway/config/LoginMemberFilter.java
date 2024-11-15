@@ -7,7 +7,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
-import org.wrn.train.common.util.JwtUtil;
+import org.wrn.train.gateway.util.JwtUtil;
 import reactor.core.publisher.Mono;
 
 /**
