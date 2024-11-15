@@ -93,10 +93,10 @@ public class MemberService {
         Member memberDB = selectByMobile(mobile);
 
         if (ObjectUtil.isNull(memberDB)) {
-            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_EXIST);
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_EXIST);
         }
 
-        if ("8888".equals(code)) {
+        if (!"8888".equals(code)) {
             throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_CODE_ERROR);
         }
 

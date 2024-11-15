@@ -1,4 +1,4 @@
-package org.wrn.train.common.util;
+package org.wrn.train.gateway.util;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;

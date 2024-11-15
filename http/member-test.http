@@ -8,9 +8,18 @@ Accept: application/json
 POST http://localhost:8000/member/member/register
 Content-Type: application/x-www-form-urlencoded
 
-mobile = 12344
+mobile = 13000000001
 ###
 POST http://localhost:8000/member/member/send-code
 Content-Type: application/x-www-form-urlencoded
 
 mobile = 130000000000
+
+###
+POST http://localhost:8000/member/member/login
+Content-Type: application/json
+
+{
+  "mobile": "13000000001",
+  "code": "8888"
+}
