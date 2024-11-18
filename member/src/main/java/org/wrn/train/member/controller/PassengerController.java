@@ -7,8 +7,8 @@ import org.wrn.train.common.context.LoginMemberContext;
 import org.wrn.train.common.resp.CommonResp;
 import org.wrn.train.common.resp.PageResp;
 import org.wrn.train.member.req.PassengerQueryReq;
-import org.wrn.train.member.req.PassengerQueryResp;
 import org.wrn.train.member.req.PassengerSaveReq;
+import org.wrn.train.member.resp.PassengerQueryResp;
 import org.wrn.train.member.service.PassengerService;
 
 /**

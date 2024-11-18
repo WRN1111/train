@@ -9,14 +9,15 @@ import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.wrn.train.common.context.LoginMemberContext;
 import org.wrn.train.common.resp.PageResp;
 import org.wrn.train.common.util.SnowUtil;
 import org.wrn.train.member.domain.Passenger;
 import org.wrn.train.member.domain.PassengerExample;
 import org.wrn.train.member.mapper.PassengerMapper;
 import org.wrn.train.member.req.PassengerQueryReq;
-import org.wrn.train.member.req.PassengerQueryResp;
 import org.wrn.train.member.req.PassengerSaveReq;
+import org.wrn.train.member.resp.PassengerQueryResp;
 
 import java.util.List;
 
@@ -36,10 +37,16 @@ public class PassengerService {
     public void save(PassengerSaveReq passengerSaveReq) {
         DateTime time = DateTime.now();
         Passenger passenger = BeanUtil.copyProperties(passengerSaveReq, Passenger.class);
-        passenger.setId(SnowUtil.getSnowflakeNextId());
-        passenger.setCreateTime(time);
-        passenger.setUpdateTime(time);
-        passengerMapper.insert(passenger);
+        if (ObjectUtil.isNotNull(passenger.getId())) {
+            passenger.setMemberId(LoginMemberContext.getId());
+            passenger.setId(SnowUtil.getSnowflakeNextId());
+            passenger.setCreateTime(DateTime.now());
+            passenger.setUpdateTime(DateTime.now());
+            passengerMapper.insert(passenger);
+        } else {
+            passenger.setUpdateTime(DateTime.now());
+            passengerMapper.updateByPrimaryKey(passenger);
+        }
     }
 
     public PageResp<PassengerQueryResp> queryList(PassengerQueryReq passengerQueryReq) {
@@ -48,7 +55,7 @@ public class PassengerService {
         if (ObjectUtil.isNotNull(passengerQueryReq.getMemberId())) {
             criteria.andMemberIdEqualTo(passengerQueryReq.getMemberId());
         }
-
+        LOGGER.info("查询页数: {}", passengerQueryReq.getPage());
         LOGGER.info("每页条数：{}", passengerQueryReq.getSize());
         PageHelper.startPage(passengerQueryReq.getPage(), passengerQueryReq.getSize());
         List<Passenger> passengerList = passengerMapper.selectByExample(passengerExample);

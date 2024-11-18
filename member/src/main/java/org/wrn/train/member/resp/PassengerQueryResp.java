@@ -1,4 +1,4 @@
-package org.wrn.train.member.req;
+package org.wrn.train.member.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
