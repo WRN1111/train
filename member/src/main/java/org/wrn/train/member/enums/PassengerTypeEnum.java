@@ -10,6 +10,7 @@ import java.util.List;
  * @Desc:
  * @create: 2024-11-15 16:53
  **/
+
 public enum PassengerTypeEnum {
     ADULT("1", "成人"),
 
