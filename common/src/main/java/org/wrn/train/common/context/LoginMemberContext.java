@@ -29,6 +29,7 @@ public class LoginMemberContext {
             LOGGER.error("获取登录会员信息异常", e);
             throw e;
         }
-
     }
+
+
 }
