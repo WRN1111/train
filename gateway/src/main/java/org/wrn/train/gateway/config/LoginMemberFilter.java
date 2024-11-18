@@ -6,6 +6,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.wrn.train.gateway.util.JwtUtil;
 import reactor.core.publisher.Mono;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
  * @Desc:
  * @create: 2024-11-15 15:26
  **/
+@Component
 public class LoginMemberFilter implements Ordered, GlobalFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginMemberFilter.class);

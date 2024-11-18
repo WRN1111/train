@@ -2,6 +2,7 @@ package org.wrn.train.gateway.util;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTPayload;
 import cn.hutool.jwt.JWTUtil;
@@ -44,6 +45,16 @@ public class JwtUtil {
         boolean validate = jwt.validate(0);
         LOGGER.info("JWT token校验结果：{}", validate);
         return validate;
+    }
+
+    public static JSONObject getJSONObject(String token) {
+        JWT jwt = JWTUtil.parseToken(token).setKey(salt.getBytes());
+        JSONObject payloads = jwt.getPayloads();
+        payloads.remove(JWTPayload.ISSUED_AT);
+        payloads.remove(JWTPayload.EXPIRES_AT);
+        payloads.remove(JWTPayload.NOT_BEFORE);
+        LOGGER.info("根据token获取原始内容：{}", payloads);
+        return payloads;
     }
 
 }

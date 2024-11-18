@@ -14,11 +14,11 @@ public class LoginMemberContext {
 
     private static ThreadLocal<MemberLoginResp> memberLoginResp = new ThreadLocal<>();
 
-    public static MemberLoginResp getMemberLoginResp() {
+    public static MemberLoginResp getMember() {
         return memberLoginResp.get();
     }
 
-    public static void setMemberLoginResp(MemberLoginResp memberLoginResp) {
+    public static void setMember(MemberLoginResp memberLoginResp) {
         LoginMemberContext.memberLoginResp.set(memberLoginResp);
     }
 
